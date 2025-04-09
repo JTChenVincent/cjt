@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 智能菜品识别+卡路里计算助手</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI 智能菜品识别+卡路里计算助手</h1>
+            <p>上传食物照片，AI自动识别并计算卡路里</p>
+        </header>
+
+        <main>
+            <section class="upload-section">
+                <div class="upload-container" id="upload-container">
+                    <div class="upload-area" id="upload-area">
+                        <img src="{{ url_for('static', filename='img/upload-icon.svg') }}" alt="上传图标" id="upload-icon">
+                        <p>点击或拖拽图片到此处上传</p>
+                        <input type="file" id="file-input" accept="image/*" hidden>
+                    </div>
+                    <button id="upload-btn" class="btn primary-btn">选择图片</button>
+                </div>
+                <div class="preview-container" id="preview-container" style="display: none;">
+                    <img id="preview-img" src="" alt="预览图片">
+                    <div class="preview-controls">
+                        <button id="detect-btn" class="btn primary-btn">识别食物</button>
+                        <button id="cancel-btn" class="btn secondary-btn">取消</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="results-section" id="results-section" style="display: none;">
+                <h2>识别结果</h2>
+                <div class="results-container">
+                    <div class="result-image">
+                        <img id="result-img" src="" alt="识别结果图片">
+                    </div>
+                    <div class="result-details">
+                        <div id="food-items"></div>
+                        <div class="nutrition-summary">
+                            <h3>总营养摄入</h3>
+                            <div class="nutrition-total">
+                                <div class="nutrition-item">
+                                    <span class="nutrition-label">卡路里</span>
+                                    <span class="nutrition-value" id="total-calories">0</span>
+                                    <span class="nutrition-unit">kcal</span>
+                                </div>
+                                <div class="nutrition-item">
+                                    <span class="nutrition-label">蛋白质</span>
+                                    <span class="nutrition-value" id="total-protein">0</span>
+                                    <span class="nutrition-unit">g</span>
+                                </div>
+                                <div class="nutrition-item">
+                                    <span class="nutrition-label">碳水</span>
+                                    <span class="nutrition-value" id="total-carbs">0</span>
+                                    <span class="nutrition-unit">g</span>
+                                </div>
+                                <div class="nutrition-item">
+                                    <span class="nutrition-label">脂肪</span>
+                                    <span class="nutrition-value" id="total-fat">0</span>
+                                    <span class="nutrition-unit">g</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="action-buttons">
+                            <button id="save-btn" class="btn primary-btn">保存到饮食记录</button>
+                            <button id="new-detection-btn" class="btn secondary-btn">新的识别</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="history-section">
+                <h2>今日饮食记录</h2>
+                <div class="history-container" id="history-container">
+                    <p class="empty-history">暂无饮食记录</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2023 AI 智能菜品识别+卡路里计算助手 | 本地部署版</p>
+        </footer>
+    </div>
+
+    <!-- 保存记录的模态框 -->
+    <div class="modal" id="save-modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-modal">&times;</span>
+            <h2>保存饮食记录</h2>
+            <form id="save-form">
+                <div class="form-group">
+                    <label for="meal-type">餐食类型</label>
+                    <select id="meal-type" name="meal-type">
+                        <option value="breakfast">早餐</option>
+                        <option value="lunch" selected>午餐</option>
+                        <option value="dinner">晚餐</option>
+                        <option value="snack">零食</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn primary-btn">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
